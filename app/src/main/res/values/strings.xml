@@ -1,0 +1,18 @@
+<resources>
+        <string name="app_name">Brads_Bites</string>
+        <string name="mainDescriptionHint">Enter Description</string>
+        <string name="mainQuantityHint">Enter Quantity</string>
+        <string name="mainPriceHint">Enter Price</string>
+        <string name="mainSubmitButton">Submit</string>
+        <string name="no_items">No items yet.</string>
+        <string name="no_items_yet">No items yet</string>
+        <string name="no_items_yet_2">No items yet</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="you_are_an_admin">You are an Admin</string>
+    <string name="logout">Logout?</string>
+    <string name="logout2">Logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+</resources>
