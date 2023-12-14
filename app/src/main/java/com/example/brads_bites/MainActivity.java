@@ -1,5 +1,6 @@
 package com.example.brads_bites;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +24,6 @@ import android.widget.TextView;
 import com.example.brads_bites.DB.AppDataBase;
 import com.example.brads_bites.DB.ItemsDAO;
 import com.example.brads_bites.databinding.ActivityMainBinding;
-
 
 
 import java.util.List;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mQuantity;
     private EditText mPrice;
 
+    private TextView mAdmin;
+
     private Button mSubmit;
 
     private ItemsDAO mItemsDAO;
@@ -49,13 +52,14 @@ public class MainActivity extends AppCompatActivity {
     private User mUser;
 
     private Menu mOptionsMenu;
-
+    private MenuItem mItem;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar();
 
         getDatabase();
 
@@ -70,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
         mDescription = binding.mainDescriptionEditText;
         mQuantity = binding.mainQuantityEditText;
         mPrice = binding.mainPriceEditText;
+        mAdmin = binding.textViewAdmin;
         mSubmit = binding.mainSubmitButton;
 
         mMainDisplay.setMovementMethod(new ScrollingMovementMethod());
-
 
 
         refreshDisplay();
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Item item = getValuesFromDisplay();
                 submitItem();
                 refreshDisplay();
             }
@@ -104,35 +109,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkForUser() {
-       mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
+        mUserId = getIntent().getIntExtra(USER_ID_KEY, -1);
 
-       if(mUserId != -1){
-           return;
-       }
+        if (mUserId != -1) {
+            return;
+        }
 
-       if (mPreferences == null){
-           getPrefs();
-       }
+        if (mPreferences == null) {
+            getPrefs();
+        }
 
-       mUserId = mPreferences.getInt(USER_ID_KEY, -1);
+        mUserId = mPreferences.getInt(USER_ID_KEY, -1);
 
-       if(mUserId != -1){
-           return;
-       }
+        if (mUserId != -1) {
+            return;
+        }
 
 
-       List<User> users = mItemsDAO.getAllUsers();
-       if(users.size() <= 0){
-           User defaultUser = new User("bbuck", "buck");
-           User altUser = new User("buck", "buck123");
-           mItemsDAO.insert(defaultUser);
-       }
+        List<User> users = mItemsDAO.getAllUsers();
+        if (users.size() <= 0) {
+            User defaultUser = new User("bbuck", "buck");
+            User altUser = new User("buck", "buck123");
+            mItemsDAO.insert(defaultUser);
+        }
 
-       Intent intent = LoginActivity.intentFactory(this);
-       startActivity(intent);
+        Intent intent = LoginActivity.intentFactory(this);
+        startActivity(intent);
     }
 
-    private void loginUser(int userId){
+    private void loginUser(int userId) {
         //check if userID is valid
         mUser = mItemsDAO.getUserByUserId(userId);
         //check if mUser is not null
@@ -142,15 +147,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(mUser != null){
+        if (mUser != null) {
             MenuItem item = menu.findItem(R.id.userMenuLogout);
             item.setTitle(mUser.getUserName());
         }
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void addUserToPreference(int userId){
-        if (mPreferences == null){
+    private void addUserToPreference(int userId) {
+        if (mPreferences == null) {
             getPrefs();
         }
         SharedPreferences.Editor editor = mPreferences.edit();
@@ -158,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void submitItem(){
+    private void submitItem() {
         String description = mDescription.getText().toString();
         int quantity = Integer.parseInt(mQuantity.getText().toString());
         double price = Double.parseDouble(mPrice.getText().toString());
@@ -167,31 +172,55 @@ public class MainActivity extends AppCompatActivity {
         mItemsDAO.insert(item);
     }
 
-    private void refreshDisplay(){
+    private void refreshDisplay() {
         mItemList = mItemsDAO.getItemsById(mUserId);
-        if (! mItemList.isEmpty()){
+        if (!mItemList.isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            for(Item item : mItemList){
+            for (Item item : mItemList) {
                 sb.append(item.toString());
             }
             mMainDisplay.setText(sb.toString());
-        }else{
+        } else {
             mMainDisplay.setText(R.string.no_items_yet);
         }
     }
 
-    public static Intent intentFactory(Context context, int userId){
+
+
+    public static Intent intentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(USER_ID_KEY, userId);
 
         return intent;
     }
 
-    private void getPrefs(){
+    private Item getValuesFromDisplay() {
+        String description = getString(R.string.nothing_found);
+        int quantity = 0;
+        double price = 0.0;
+
+        description = mDescription.getText().toString();
+
+        try {
+            quantity = Integer.parseInt((mQuantity.getText().toString()));
+        } catch (NumberFormatException e) {
+            Log.d("ITEM", "Couldn't convert quantity");
+        }
+
+        try {
+            price = Double.parseDouble(mPrice.getText().toString());
+        } catch (NumberFormatException e) {
+            Log.d("Item", "Couldn't convert price");
+        }
+
+        return new Item(description, quantity, price, mUserId);
+    }
+
+    private void getPrefs() {
         mPreferences = this.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
     }
 
-    private void logoutUser(){
+    private void logoutUser() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setMessage(R.string.logout);
 
@@ -214,24 +243,25 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder.create().show();
     }
 
-    private void clearUserFromIntent(){
+    private void clearUserFromIntent() {
         getIntent().putExtra(USER_ID_KEY, -1);
     }
 
-    private void clearUserFromPref(){
+    private void clearUserFromPref() {
         addUserToPreference(-1);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.user_menu, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
 
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.userMenuLogout) {
             logoutUser();
             return true;
