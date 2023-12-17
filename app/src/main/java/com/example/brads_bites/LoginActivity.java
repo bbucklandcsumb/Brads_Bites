@@ -6,6 +6,7 @@ import androidx.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,14 +15,13 @@ import android.widget.Toast;
 import com.example.brads_bites.DB.AppDataBase;
 import com.example.brads_bites.DB.ItemsDAO;
 
-import java.util.List;
-
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mUsernameField;
     private EditText mPasswordField;
 
-    private Button mButton;
+    private Button mButtonLogin;
+    private Button mButtonCreate;
 
     private ItemsDAO mItemsDAO;
 
@@ -45,9 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         mUsernameField = findViewById(R.id.editTextTextLoginUserName);
         mPasswordField = findViewById(R.id.editTextLoginPassword);
 
-        mButton = findViewById(R.id.buttonLogin);
+        mButtonLogin = findViewById(R.id.buttonLogin);
+        mButtonCreate = findViewById(R.id.buttonCreateUser);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
+        mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getValuesFromDisplay();
@@ -55,9 +56,27 @@ public class LoginActivity extends AppCompatActivity {
                     if (!validatePassword()){
                         Toast.makeText(LoginActivity.this, "Invalid password", Toast.LENGTH_SHORT).show();
                     }else{
-                        Intent intent = MainActivity.intentFactory(getApplicationContext(),mUser.getUserId());
+                        //Intent intent = MainActivity.intentFactory(getApplicationContext(),mUser.getUserId());
+                        //startActivity(intent);
+                        //TODO: make this go to landing page
+                        Intent intent = LandingActivity.intentFactory(getApplicationContext(), mUser.getUserId());
                         startActivity(intent);
                     }
+                }
+            }
+        });
+
+        mButtonCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getValuesFromDisplay();
+                User user = new User(mUsername, mPassword);
+                if(!checkForUserInDatabase()) {
+                    mItemsDAO.insert(user);
+                    Toast.makeText(LoginActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(LoginActivity.this, "Username already exists", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -75,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean checkForUserInDatabase(){
         mUser = mItemsDAO.getUserByUsername(mUsername);
         if (mUser == null){
-            Toast.makeText(this, "no user" + mUsername + " found", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "no user" + mUsername + " found", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -89,8 +108,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public static Intent intentFactory(Context context){
-        Intent intent = new Intent(context, LoginActivity.class);
 
-        return intent;
+        return new Intent(context, LoginActivity.class);
     }
 }

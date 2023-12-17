@@ -29,8 +29,8 @@ import com.example.brads_bites.databinding.ActivityMainBinding;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String USER_ID_KEY = "com.example.brads_bites.userIdKey";
-    private static final String PREFERENCES_KEY = "com.example.brads_bites.Preferences_Key";
+    static final String USER_ID_KEY = "com.example.brads_bites.userIdKey";
+    static final String PREFERENCES_KEY = "com.example.brads_bites.Preferences_Key";
     private ActivityMainBinding binding;
 
     private TextView mMainDisplay;
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar();
+
+        getPrefs();
 
         getDatabase();
 
@@ -92,12 +94,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Admin functionality
-        /*
-        if (mUser!=null && mUser.getUserName().equals("drew")){
+
+        if (mUser!=null && mUser.getUserName().equals("admin1")){
             mAdmin.setVisibility(View.VISIBLE);
         }else{
             mAdmin.setVisibility(View.GONE);
-        }*/
+        }
 
     }// end of onCreate
 
@@ -128,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
         List<User> users = mItemsDAO.getAllUsers();
         if (users.size() <= 0) {
-            User defaultUser = new User("bbuck", "buck");
-            User altUser = new User("buck", "buck123");
-            mItemsDAO.insert(defaultUser);
+            User admin1 = new User("admin1", "123");
+            User admin2 = new User("admin2", "456");
+            mItemsDAO.insert(admin1, admin2);
         }
 
         Intent intent = LoginActivity.intentFactory(this);

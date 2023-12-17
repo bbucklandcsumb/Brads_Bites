@@ -10,14 +10,13 @@
         android:id="@+id/editTextTextLoginUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="120dp"
         android:ems="10"
         android:hint="@string/username"
         android:inputType="text"
-        android:minHeight="48dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,14 +24,12 @@
         android:id="@+id/editTextLoginPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:minHeight="48dp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextLoginUserName" />
 
@@ -40,25 +37,37 @@
         android:id="@+id/buttonLogin"
         android:layout_width="172dp"
         android:layout_height="85dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:text="@string/login"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLoginPassword" />
 
     <TextView
         android:id="@+id/textView_Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/editTextTextLoginUserName"
+        android:layout_width="203dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
         android:text="@string/brad_s_bites"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="158dp" />
+        android:textSize="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextLoginUserName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonCreateUser"
+        android:layout_width="172dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/create_user"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

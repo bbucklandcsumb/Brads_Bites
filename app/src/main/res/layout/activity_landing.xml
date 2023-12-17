@@ -6,11 +6,100 @@
     android:layout_height="match_parent"
     tools:context=".LandingActivity">
 
+    <TextView
+        android:id="@+id/textView_Welcome"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Hello USER"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="171dp" />
+        android:id="@+id/button_search"
+        android:layout_width="97dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/search_food"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Welcome" />
+
+    <Button
+        android:id="@+id/button_current"
+        android:layout_width="97dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/current_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_search" />
+
+    <Button
+        android:id="@+id/button_past"
+        android:layout_width="100dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/past_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_current" />
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="100dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/add_items"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_past"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <Button
+        android:id="@+id/button_viewItems"
+        android:layout_width="100dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/view_items"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <Button
+        android:id="@+id/button_remove"
+        android:layout_width="100dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/past_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_viewItems"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <Button
+        android:id="@+id/button_viewUsers"
+        android:layout_width="100dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/view_users"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_remove"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
