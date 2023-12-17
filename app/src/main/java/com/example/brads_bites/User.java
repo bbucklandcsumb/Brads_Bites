@@ -42,4 +42,12 @@ public class User {
     public void setPassword(String password) {
         mPassword = password;
     }
+
+    @Override
+    public String toString() {
+        return "User Id # " + mUserId + "\n" +
+                "User Name = " + mUserName + "\n" +
+                "Password = " + mPassword + '\n' +
+                "=-=-=-=-=-=-=-=-=-" + "\n";
+    }
 }

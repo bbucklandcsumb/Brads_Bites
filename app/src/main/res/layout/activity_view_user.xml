@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchActivity">
+    tools:context=".ViewUserActivity">
+
     <TextView
-        android:id="@+id/searchDisplay"
+        android:id="@+id/viewUserDisplay"
         android:layout_width="373dp"
         android:layout_height="217dp"
         android:layout_marginStart="16dp"
